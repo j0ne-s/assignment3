@@ -1,3 +1,19 @@
+/********************************************************************************
+*  WEB322 – Assignment 03
+* 
+*  I declare that this assignment is my own work in accordance with Seneca's
+*  Academic Integrity Policy:
+* 
+*  https://www.senecacollege.ca/about/policies/academic-integrity-policy.html
+* 
+*  Name: Joao Santiago Student ID: 126567221 Date: 06/03/2024
+*
+*  Published URL: https://calm-rose-lemming-shoe.cyclic.app/
+*
+********************************************************************************/
+
+
+
 const legoData = require('./modules/legoSets');
 const path = require('path');
 
