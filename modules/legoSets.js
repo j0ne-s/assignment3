@@ -28,7 +28,7 @@ function getSetByNum(setNum) {
     if (foundSet) {
       resolve(foundSet)
     } else {
-      reject("Unable to find requested set");
+      reject("***ERROR*** UNABLE TO FIND REQUESTED SET");
     }
 
   });
@@ -43,7 +43,7 @@ function getSetsByTheme(theme) {
     if (foundSets.length > 0 ) {
       resolve(foundSets)
     } else {
-      reject("Unable to find requested sets");
+      reject("***ERROR*** UNABLE TO FIND REQUESTED SETS");
     }
 
   });
