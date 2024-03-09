@@ -7,6 +7,7 @@ const app = express();
 const HTTP_PORT = process.env.PORT || 5500;
 
 app.use(express.static('public'));
+app.use('/public', express.static('public'))
 
 
 app.get('/', (req, res) => {
