@@ -45,7 +45,7 @@ app.get("/lego/sets", async (req,res) => {
   }
 });
 
-app.get("/lego/sets/:num", async (req,res)=>{
+app.get("/lego/sets/:num", async (req,res) => {
   const legoNum = req.params.num;
   try {
     let set = await legoData.getSetByNum(legoNum);
