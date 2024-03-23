@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [`./views/**/*.html`],
-  theme: {
+  content: [`./views/**/*.ejs`],
+    theme: {
     extend: {
       colors: {
         'custom-404': '#f8fdef'

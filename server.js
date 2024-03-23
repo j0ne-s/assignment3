@@ -6,7 +6,7 @@
 * 
 *  https://www.senecacollege.ca/about/policies/academic-integrity-policy.html
 * 
-*  Name: Joao Santiago Student ID: 126567221 Date: 06/03/2024
+*  Name: Joao Santiago Student ID: 126567221 Date: 20/03/2024
 *
 *  Published URL: https://calm-rose-lemming-shoe.cyclic.app/
 ********************************************************************************
@@ -17,31 +17,36 @@ const path = require('path');
 const express = require('express');
 const app = express();
 
+app.set('view engine', 'ejs');
+
 const HTTP_PORT = process.env.PORT || 5500;
 
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, "/views/home.html"));
+  res.render("home", {page: '/'});
 });
 
 app.get('/about', (req, res) => {
-  res.sendFile(path.join(__dirname, "/views/about.html"));
+  res.render("about", {page: '/about'});
 });
 
 app.get("/lego/sets", async (req,res) => {
   const theme = req.query.theme;
   try {
+    let sets;
     if (theme) {
-      const sets = await legoData.getSetsByTheme(theme);
-      res.send(sets); 
-      } else {
-      const sets = await legoData.getAllSets();
-      res.send(sets);
+      sets = await legoData.getSetsByTheme(theme);
+    } else {
+      sets = await legoData.getAllSets();
+    }
+    if (sets.length === 0) {
+      res.status(404).render("404", {page: req.path, message: "No sets found for the matching theme"});
+    } else {
+      res.render("sets", {page: '/lego/sets', sets: sets});
     }
   } catch(err){
-    res.status(404).send(err);
-    //res.sendStatus(404);
+    res.status(404).render("404", {page: req.path, message: "An error occurred while fetching the sets"});
   }
 });
 
@@ -49,14 +54,18 @@ app.get("/lego/sets/:num", async (req,res) => {
   const legoNum = req.params.num;
   try {
     let set = await legoData.getSetByNum(legoNum);
-    res.send(set);
+    if (!set) {
+      res.status(404).render("404", {page: req.path, message: "No set found for the specified set number"});
+    } else {
+      res.render("set", {set: set});
+    }
   } catch(err) {
-    res.status(404).send(err);
+    res.status(404).render("404", {page: req.path, message: "An error occurred while fetching the set"});
   }
 });
 
 app.use((req, res, next) => {
-  res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
+  res.status(404).render("404", {page: req.path, message: "I'm sorry, we're unable to find what you're looking for, my bro/sis"});
 });
 
 legoData.initialize().then(()=>{
